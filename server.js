@@ -13,6 +13,8 @@ app.use(express.json())
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
+
 // Connecting to the database
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
@@ -27,6 +29,9 @@ mongoose.connect(dbConfig.url, {
 app.get('/', (req, res) => {
     res.json({ "message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes." });
 });
+
+// Require Notes routes
+require('./app/routes/note.routes.js')(app);
 
 // listen for requests
 app.listen(3000, () => {
